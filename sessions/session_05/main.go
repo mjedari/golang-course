@@ -67,21 +67,21 @@ func main() {
 	// buffered channel can accept send exact amount of buffer size without necessarily waiting to be received data
 
 	//var ch2 chan string
-	ch := make(chan string, 2)
+	ch := make(chan string)
 	// [ [ _string,  _string ]
 	//ch3 := make(chan []string, 2)
 	// [ [ _[]string,  _[]string ]
 
+	go listenChannel(ch)
+
 	ch <- "mahdi" // <- deadlock here
-	ch <- "hesam"
-	ch <- "ali"
 
-	close(ch)
+	//close(ch)
 
-	for {
-		time.Sleep(time.Second)
-		fmt.Println(<-ch)
-	}
+	//for {
+	//	time.Sleep(time.Second)
+	//	fmt.Println(<-ch)
+	//}
 
 	// select version
 	//select {
@@ -90,4 +90,9 @@ func main() {
 	//default:
 	//	return
 	//}
+	time.Sleep(3 * time.Second)
+}
+
+func listenChannel(ch chan string) {
+	fmt.Println("read data from channel: ", <-ch)
 }
