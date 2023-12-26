@@ -62,11 +62,20 @@ func main() {
 	//	fmt.Println("This is the end of the program")
 	//}
 
-	// channel
+	// Channel
+	// unbuffered channel when send happens, there should be some area to read that channel unless we should expect deadlock
+	// buffered channel can accept send exact amount of buffer size without necessarily waiting to be received data
 
+	//var ch2 chan string
 	ch := make(chan string, 2)
-	ch <- "mahdi"
+	// [ [ _string,  _string ]
+	//ch3 := make(chan []string, 2)
+	// [ [ _[]string,  _[]string ]
+
+	ch <- "mahdi" // <- deadlock here
 	ch <- "hesam"
+	ch <- "ali"
+
 	close(ch)
 
 	for {
@@ -75,10 +84,10 @@ func main() {
 	}
 
 	// select version
-	select {
-	case v := <-ch:
-		fmt.Println(v)
-	default:
-		return
-	}
+	//select {
+	//case v := <-ch:
+	//	fmt.Println(v)
+	//default:
+	//	return
+	//}
 }
